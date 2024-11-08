@@ -1,8 +1,15 @@
-import "./App.css";
-import LoanTable from "./components/loan-table/index";
+import React from "react";
+import { useThemeStore } from "@/store/themeStore";
+import LoanTable from "@/components/loan-table";
 
-function App() {
-  return <LoanTable />;
-}
+const App: React.FC = () => {
+  const { darkMode } = useThemeStore();
+
+  return (
+    <div className={darkMode ? "dark" : ""}>
+      <LoanTable />
+    </div>
+  );
+};
 
 export default App;

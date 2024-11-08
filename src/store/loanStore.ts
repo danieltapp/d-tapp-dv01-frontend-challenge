@@ -3,6 +3,9 @@ import { persist } from "zustand/middleware";
 import { getLoanData } from "@/request/api";
 import type { LoanData } from "@/request/api";
 
+// TODOS:
+// order options correct (ex: Q1, Q2, Q3, Q4)
+
 interface LoanState {
   loanData: LoanData[];
   filters: {
@@ -20,7 +23,7 @@ interface LoanState {
   setFilter: (key: keyof LoanState["filters"], value: string) => void;
   resetFilters: () => void;
   setAggregateData: (data: Record<string, number>) => void;
-  applyFilters: () => void; // Add applyFilters action
+  applyFilters: () => void;
 }
 
 export const useLoanStore = create<LoanState>()(
@@ -42,35 +45,23 @@ export const useLoanStore = create<LoanState>()(
         const csvData = await getLoanData();
         set({ loanData: csvData });
 
-        const homeOwnershipOptions = [
+        const createOptions = (key: keyof LoanData) => [
           "all",
-          ...new Set(csvData.map((item) => item.homeOwnership)),
-        ];
-        const quarterOptions = [
-          "all",
-          ...new Set(csvData.map((item) => item.quarter)),
-        ];
-        const termOptions = [
-          "all",
-          ...new Set(csvData.map((item) => item.term)),
-        ];
-        const yearOptions = [
-          "all",
-          ...new Set(csvData.map((item) => item.year)),
+          ...new Set(csvData.map((item) => item[key])),
         ];
 
         set({
-          homeOwnershipOptions,
-          quarterOptions,
-          termOptions,
-          yearOptions,
+          homeOwnershipOptions: createOptions("homeOwnership"),
+          quarterOptions: createOptions("quarter"),
+          termOptions: createOptions("term"),
+          yearOptions: createOptions("year"),
         });
       },
       setFilter: (key, value) => {
         set((state) => ({
           filters: { ...state.filters, [key]: value },
         }));
-        get().applyFilters(); // Automatically apply filters when set
+        get().applyFilters();
       },
       resetFilters: () => {
         set({
@@ -81,7 +72,7 @@ export const useLoanStore = create<LoanState>()(
             year: "all",
           },
         });
-        get().applyFilters(); // Reapply filters after reset
+        get().applyFilters();
       },
       setAggregateData: (data) => {
         set({ aggregateData: data });
@@ -116,6 +107,11 @@ export const useLoanStore = create<LoanState>()(
     }),
     {
       name: "loan-storage",
+      onRehydrateStorage: (state) => {
+        if (Object.keys(state.aggregateData).length === 0) {
+          state.fetchData(); // This can remain for the case where the state is loaded
+        }
+      },
     }
   )
 );
