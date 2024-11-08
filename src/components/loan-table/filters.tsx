@@ -7,7 +7,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { useLoanStore } from "@/store/loanStore";
+import { useLoanStore } from "@/store/loan-store";
 
 const FiltersComponent: React.FC = () => {
   const {

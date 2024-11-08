@@ -1,4 +1,4 @@
-import Papa from "papaparse";
+import Papa, { ParseMeta } from "papaparse";
 
 export interface LoanData {
   currentBalance: string;
@@ -54,7 +54,16 @@ export const getLoanData = async (): Promise<LoanData[]> => {
               row["term"] !== "" &&
               row["V1"] !== ""
           );
-          resolve(parseData({ data: validRows, errors: [], meta: {} }));
+
+          const meta: ParseMeta = {
+            delimiter: ",",
+            linebreak: "\n",
+            aborted: false,
+            truncated: false,
+            cursor: 0,
+          };
+
+          resolve(parseData({ data: validRows, errors: [], meta }));
         },
         error: (error: Error): void => {
           console.error("Parsing error:", error);

@@ -35,7 +35,7 @@ const AggregatedTable: React.FC<AggregatedTableProps> = ({ aggregateData }) => {
               <TableCell key={index} className="border-r last:border-r-0">
                 <NumberFlow
                   value={totalBalance}
-                  format={{ notation: "compact" }}
+                  format={{ notation: "compact", currency: "USD" }}
                   locales="en-US"
                 />
               </TableCell>
