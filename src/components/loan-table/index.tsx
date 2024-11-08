@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { getLoanData } from "@/request/api";
 import type { LoanData } from "@/request/api";
+import NumberFlow from "@number-flow/react";
 
 const LoanTable: React.FC = () => {
   const [loanData, setLoanData] = useState<LoanData[]>([]);
@@ -112,7 +113,11 @@ const LoanTable: React.FC = () => {
             <TableRow className="text-center">
               {Object.values(aggregatedData).map((totalBalance, index) => (
                 <TableCell key={index} className="border-r last:border-r-0">
-                  ${totalBalance.toFixed(2)}
+                  <NumberFlow
+                    value={totalBalance}
+                    format={{ notation: "compact" }}
+                    locales="en-US"
+                  />
                 </TableCell>
               ))}
             </TableRow>
