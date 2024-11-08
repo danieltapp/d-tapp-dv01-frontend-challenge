@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableHeader,
@@ -15,64 +15,43 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { getLoanData } from "@/request/api";
-import type { LoanData } from "@/request/api";
+import { useLoanStore } from "@/store/loanStore";
 import NumberFlow from "@number-flow/react";
 
 const LoanTable: React.FC = () => {
-  const [loanData, setLoanData] = useState<LoanData[]>([]);
-  const [aggregatedData, setAggregatedData] = useState<Record<string, number>>(
-    {}
-  );
-
-  // Unique filter options states
-  const [homeOwnershipOptions, setHomeOwnershipOptions] = useState<string[]>(
-    []
-  );
-  const [quarterOptions, setQuarterOptions] = useState<string[]>([]);
-  const [termOptions, setTermOptions] = useState<string[]>([]);
-  const [yearOptions, setYearOptions] = useState<string[]>([]);
-
-  // Filter states
-  const [homeOwnership, setHomeOwnership] = useState("all");
-  const [quarter, setQuarter] = useState("all");
-  const [term, setTerm] = useState("all");
-  const [year, setYear] = useState("all");
+  const {
+    loanData,
+    filters,
+    homeOwnershipOptions,
+    quarterOptions,
+    termOptions,
+    yearOptions,
+    aggregateData,
+    fetchData,
+    setFilter,
+    resetFilters,
+    setAggregateData,
+  } = useLoanStore();
 
   useEffect(() => {
-    // Fetch loan data when component mounts
-    getLoanData().then((data) => {
-      setLoanData(data);
-
-      // Gather unique options for each filter based on loanData
-      setHomeOwnershipOptions([
-        "all",
-        ...new Set(data.map((item) => item.homeOwnership)),
-      ]);
-      setQuarterOptions(["all", ...new Set(data.map((item) => item.quarter))]);
-      setTermOptions(["all", ...new Set(data.map((item) => item.term))]);
-      setYearOptions(["all", ...new Set(data.map((item) => item.year))]);
-    });
-  }, []);
+    fetchData();
+  }, [fetchData]);
 
   useEffect(() => {
-    // Filter and aggregate data whenever loanData or filters change
     const filteredData = loanData.filter((item) => {
       return (
-        (homeOwnership === "all" || item.homeOwnership === homeOwnership) &&
-        (quarter === "all" || item.quarter === quarter) &&
-        (term === "all" || item.term === term) &&
-        (year === "all" || item.year === year)
+        (filters.homeOwnership === "all" ||
+          item.homeOwnership === filters.homeOwnership) &&
+        (filters.quarter === "all" || item.quarter === filters.quarter) &&
+        (filters.term === "all" || item.term === filters.term) &&
+        (filters.year === "all" || item.year === filters.year)
       );
     });
-    aggregateDataByGrade(filteredData);
-  }, [loanData, homeOwnership, quarter, term, year]);
 
-  const aggregateDataByGrade = (data: LoanData[]) => {
-    // Aggregate the currentBalance by grade
-    const aggregated = data.reduce((acc, item) => {
+    // Aggregate by grade
+    const aggregated = filteredData.reduce((acc, item) => {
       const grade = item.grade;
-      const balance = parseFloat(item.currentBalance) || 0; // Ensure the balance is a number
+      const balance = parseFloat(item.currentBalance) || 0;
 
       if (acc[grade]) {
         acc[grade] += balance;
@@ -82,15 +61,8 @@ const LoanTable: React.FC = () => {
       return acc;
     }, {} as Record<string, number>);
 
-    setAggregatedData(aggregated);
-  };
-
-  const resetFilters = () => {
-    setHomeOwnership("all");
-    setQuarter("all");
-    setTerm("all");
-    setYear("all");
-  };
+    setAggregateData(aggregated);
+  }, [loanData, filters, setAggregateData]);
 
   return (
     <div className="p-6 space-y-6">
@@ -99,7 +71,7 @@ const LoanTable: React.FC = () => {
         <Table className="w-full">
           <TableHeader>
             <TableRow className="text-center">
-              {Object.keys(aggregatedData).map((grade, index) => (
+              {Object.keys(aggregateData).map((grade, index) => (
                 <TableHead
                   key={index}
                   className="text-center border-r last:border-r-0"
@@ -111,7 +83,7 @@ const LoanTable: React.FC = () => {
           </TableHeader>
           <TableBody>
             <TableRow className="text-center">
-              {Object.values(aggregatedData).map((totalBalance, index) => (
+              {Object.values(aggregateData).map((totalBalance, index) => (
                 <TableCell key={index} className="border-r last:border-r-0">
                   <NumberFlow
                     value={totalBalance}
@@ -128,8 +100,8 @@ const LoanTable: React.FC = () => {
       {/* Filters */}
       <div className="flex items-center space-x-4 justify-center">
         <Select
-          value={homeOwnership}
-          onValueChange={(value) => setHomeOwnership(value)}
+          value={filters.homeOwnership}
+          onValueChange={(value) => setFilter("homeOwnership", value)}
         >
           <SelectTrigger className="w-32">
             <SelectValue placeholder="Home Ownership" />
@@ -143,7 +115,10 @@ const LoanTable: React.FC = () => {
           </SelectContent>
         </Select>
 
-        <Select value={quarter} onValueChange={(value) => setQuarter(value)}>
+        <Select
+          value={filters.quarter}
+          onValueChange={(value) => setFilter("quarter", value)}
+        >
           <SelectTrigger className="w-24">
             <SelectValue placeholder="Quarter" />
           </SelectTrigger>
@@ -156,7 +131,10 @@ const LoanTable: React.FC = () => {
           </SelectContent>
         </Select>
 
-        <Select value={term} onValueChange={(value) => setTerm(value)}>
+        <Select
+          value={filters.term}
+          onValueChange={(value) => setFilter("term", value)}
+        >
           <SelectTrigger className="w-24">
             <SelectValue placeholder="Term" />
           </SelectTrigger>
@@ -169,7 +147,10 @@ const LoanTable: React.FC = () => {
           </SelectContent>
         </Select>
 
-        <Select value={year} onValueChange={(value) => setYear(value)}>
+        <Select
+          value={filters.year}
+          onValueChange={(value) => setFilter("year", value)}
+        >
           <SelectTrigger className="w-24">
             <SelectValue placeholder="Year" />
           </SelectTrigger>
