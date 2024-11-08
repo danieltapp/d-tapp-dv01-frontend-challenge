@@ -20,7 +20,6 @@ import NumberFlow from "@number-flow/react";
 
 const LoanTable: React.FC = () => {
   const {
-    loanData,
     filters,
     homeOwnershipOptions,
     quarterOptions,
@@ -30,39 +29,11 @@ const LoanTable: React.FC = () => {
     fetchData,
     setFilter,
     resetFilters,
-    setAggregateData,
   } = useLoanStore();
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  useEffect(() => {
-    const filteredData = loanData.filter((item) => {
-      return (
-        (filters.homeOwnership === "all" ||
-          item.homeOwnership === filters.homeOwnership) &&
-        (filters.quarter === "all" || item.quarter === filters.quarter) &&
-        (filters.term === "all" || item.term === filters.term) &&
-        (filters.year === "all" || item.year === filters.year)
-      );
-    });
-
-    // Aggregate by grade
-    const aggregated = filteredData.reduce((acc, item) => {
-      const grade = item.grade;
-      const balance = parseFloat(item.currentBalance) || 0;
-
-      if (acc[grade]) {
-        acc[grade] += balance;
-      } else {
-        acc[grade] = balance;
-      }
-      return acc;
-    }, {} as Record<string, number>);
-
-    setAggregateData(aggregated);
-  }, [loanData, filters, setAggregateData]);
 
   return (
     <div className="p-6 space-y-6">

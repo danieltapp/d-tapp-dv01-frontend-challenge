@@ -19,7 +19,8 @@ interface LoanState {
   fetchData: () => Promise<void>;
   setFilter: (key: keyof LoanState["filters"], value: string) => void;
   resetFilters: () => void;
-  setAggregateData: (data: Record<string, number>) => void; // Add this line
+  setAggregateData: (data: Record<string, number>) => void;
+  applyFilters: () => void; // Add applyFilters action
 }
 
 export const useLoanStore = create<LoanState>()(
@@ -41,7 +42,6 @@ export const useLoanStore = create<LoanState>()(
         const csvData = await getLoanData();
         set({ loanData: csvData });
 
-        // Extract unique options
         const homeOwnershipOptions = [
           "all",
           ...new Set(csvData.map((item) => item.homeOwnership)),
@@ -70,6 +70,7 @@ export const useLoanStore = create<LoanState>()(
         set((state) => ({
           filters: { ...state.filters, [key]: value },
         }));
+        get().applyFilters(); // Automatically apply filters when set
       },
       resetFilters: () => {
         set({
@@ -80,9 +81,37 @@ export const useLoanStore = create<LoanState>()(
             year: "all",
           },
         });
+        get().applyFilters(); // Reapply filters after reset
       },
       setAggregateData: (data) => {
         set({ aggregateData: data });
+      },
+      applyFilters: () => {
+        const { loanData, filters, setAggregateData } = get();
+        const filteredData = loanData.filter((item) => {
+          return (
+            (filters.homeOwnership === "all" ||
+              item.homeOwnership === filters.homeOwnership) &&
+            (filters.quarter === "all" || item.quarter === filters.quarter) &&
+            (filters.term === "all" || item.term === filters.term) &&
+            (filters.year === "all" || item.year === filters.year)
+          );
+        });
+
+        // Aggregate by grade
+        const aggregated = filteredData.reduce((acc, item) => {
+          const grade = item.grade;
+          const balance = parseFloat(item.currentBalance) || 0;
+
+          if (acc[grade]) {
+            acc[grade] += balance;
+          } else {
+            acc[grade] = balance;
+          }
+          return acc;
+        }, {} as Record<string, number>);
+
+        setAggregateData(aggregated);
       },
     }),
     {
