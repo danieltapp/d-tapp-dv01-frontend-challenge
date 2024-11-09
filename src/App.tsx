@@ -3,12 +3,12 @@ import { useThemeStore } from "@/store/theme-provider";
 import type { Theme } from "@/store/theme-provider";
 import LoanTable from "@/components/loan-table";
 import { ModeToggle } from "./components/mode-toggle";
+import { LoanChart } from "./components/loan-chart";
 
 const App: React.FC = () => {
   const { theme, setTheme } = useThemeStore();
 
   useEffect(() => {
-    // Initialize theme on mount
     const storedTheme =
       (localStorage.getItem("vite-ui-theme") as Theme) || "system";
     setTheme(storedTheme);
@@ -18,7 +18,14 @@ const App: React.FC = () => {
     <Profiler id="App" onRender={() => {}}>
       <div className={theme === "dark" ? "dark" : ""}>
         <ModeToggle />
-        <LoanTable />
+        <div className="space-y-6 px-4 py-6 max-w-screen-xl mx-auto">
+          <LoanChart />
+          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-6 sm:space-y-0">
+            <div className="overflow-x-auto w-full">
+              <LoanTable />
+            </div>
+          </div>
+        </div>
       </div>
     </Profiler>
   );
