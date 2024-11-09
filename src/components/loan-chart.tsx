@@ -43,7 +43,7 @@ export const LoanChart: React.FC = () => {
     <ChartContainer config={chartConfig} className="w-full max-h-[500px]">
       <>
         <h3 className="text-center text-xl font-semibold mb-4">
-          Total Grade Amounts
+          💰 Total Grade Amounts 💰
         </h3>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
