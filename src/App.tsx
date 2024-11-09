@@ -17,12 +17,16 @@ const App: React.FC = () => {
   return (
     <Profiler id="App" onRender={() => {}}>
       <div className={theme === "dark" ? "dark" : ""}>
-        <ModeToggle />
-        <div className="space-y-6 px-4 py-6 max-w-screen-xl mx-auto">
-          <LoanChart />
-          <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-6 sm:space-y-0">
-            <div className="overflow-x-auto w-full">
-              <LoanTable />
+        <div className="fixed top-4 right-4 z-10">
+          <ModeToggle />
+        </div>
+        <div className="w-full max-w-screen-xl mx-auto space-y-6 px-4 py-6">
+          <div className="space-y-6 sm:space-y-8">
+            <LoanChart />
+            <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-6 sm:space-y-0">
+              <div className="overflow-x-auto w-full">
+                <LoanTable />
+              </div>
             </div>
           </div>
         </div>

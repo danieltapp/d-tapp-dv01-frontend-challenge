@@ -11,6 +11,7 @@ import {
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useLoanStore } from "@/store/loan-store";
 
+// Function to format numbers as currency
 const formatAmountForDisplay = (amount: number) => {
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -25,11 +26,10 @@ const formatAmountForDisplay = (amount: number) => {
 export const LoanChart: React.FC = () => {
   const { aggregateData } = useLoanStore();
 
-  // Prepare chart data with numeric values for rendering the chart
   const chartData = Object.keys(aggregateData).map((key) => ({
     grade: `Grade ${key}`,
     amount: aggregateData[key], // Raw numeric values for the chart
-    amountFormatted: formatAmountForDisplay(aggregateData[key]), // Formatted for display (e.g., tooltips, table)
+    amountFormatted: formatAmountForDisplay(aggregateData[key]),
   }));
 
   const chartConfig = {
@@ -40,12 +40,12 @@ export const LoanChart: React.FC = () => {
   } satisfies ChartConfig;
 
   return (
-    <ChartContainer config={chartConfig} className="w-full">
+    <ChartContainer config={chartConfig} className="w-full max-h-[500px]">
       <>
         <h3 className="text-center text-xl font-semibold mb-4">
           Amount by Grade
         </h3>
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 10 }}

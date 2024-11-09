@@ -7,7 +7,7 @@ const LoanTable: React.FC = () => {
   const { aggregateData } = useLoanStore();
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6 w-full max-w-full">
       <AggregatedTable aggregateData={aggregateData} />
       <Filters />
     </div>
