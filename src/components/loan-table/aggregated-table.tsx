@@ -16,13 +16,18 @@ interface AggregatedTableProps {
 const AggregatedTable: React.FC<AggregatedTableProps> = ({ aggregateData }) => {
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">
-      <Table className="w-full">
+      <Table className="w-full" aria-labelledby="aggregated-table">
+        <caption id="aggregated-table" className="sr-only">
+          Aggregated table showing total balances by grade
+        </caption>
         <TableHeader>
           <TableRow className="text-center">
             {Object.keys(aggregateData).map((grade, index) => (
               <TableHead
                 key={index}
                 className="text-center border-r last:border-r-0"
+                scope="col"
+                aria-label={`Grade ${grade}`}
               >
                 Grade {grade}
               </TableHead>
@@ -32,7 +37,14 @@ const AggregatedTable: React.FC<AggregatedTableProps> = ({ aggregateData }) => {
         <TableBody>
           <TableRow className="text-center">
             {Object.values(aggregateData).map((totalBalance, index) => (
-              <TableCell key={index} className="border-r last:border-r-0">
+              <TableCell
+                key={index}
+                className="border-r last:border-r-0"
+                scope="row"
+                aria-label={`Total balance for Grade ${
+                  Object.keys(aggregateData)[index]
+                }`}
+              >
                 <NumberFlow
                   value={totalBalance}
                   format={{ notation: "compact", currency: "USD" }}
