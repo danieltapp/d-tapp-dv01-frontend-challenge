@@ -58,58 +58,58 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
 
-/* Apply border to all elements */
-@layer base {
+  /* Global styles */
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground; /* Apply base styles */
-  }
-}
-/* Prevent large gaps between chart and table */
-@media (min-width: 1024px) {
-  .space-y-6 {
-    margin-bottom: 2rem; /* Reduced space between chart and table */
+    @apply bg-background text-foreground font-mono; /* Apply base styles and monospaced font */
   }
 
-  .sm\:space-y-8 {
-    margin-bottom: 1.5rem; /* Less vertical space on larger screens */
+  /* Prevent large gaps between chart and table */
+  @media (min-width: 1024px) {
+    .space-y-6 {
+      margin-bottom: 2rem; /* Reduced space between chart and table */
+    }
+
+    .sm\:space-y-8 {
+      margin-bottom: 1.5rem; /* Less vertical space on larger screens */
+    }
+
+    .sm\:space-x-6 {
+      margin-right: 1.5rem; /* Reduced space between chart and table */
+    }
   }
 
-  .sm\:space-x-6 {
-    margin-right: 1.5rem; /* Reduced space between chart and table */
-  }
-}
-
-/* Ensure no horizontal scrollbar on tables */
-@layer base {
+  /* Ensure no horizontal scrollbar on tables */
   .overflow-x-auto {
     overflow-x: auto; /* Enables horizontal scrolling only if necessary */
     -webkit-overflow-scrolling: touch; /* Helps with smooth scrolling on iOS */
   }
+
   .w-full {
     width: 100%; /* Ensures full width of elements inside their container */
   }
+
   /* Controls padding and spacing inside table container */
   .space-y-6 {
     padding: 1rem 0; /* Reduced vertical spacing */
   }
-}
 
-/* Align Mode Toggle properly */
-.fixed {
-  right: 1rem;
-  top: 1rem;
-  z-index: 1000;
-}
+  /* Align Mode Toggle properly */
+  .fixed {
+    right: 1rem;
+    top: 1rem;
+    z-index: 1000;
+  }
 
-/* Enclose the entire chart and table container for better alignment */
-@media (max-width: 1024px) {
-  .space-y-6 {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+  /* Enclose the entire chart and table container for better alignment */
+  @media (max-width: 1024px) {
+    .space-y-6 {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
   }
 }

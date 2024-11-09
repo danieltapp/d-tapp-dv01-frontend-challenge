@@ -7,15 +7,14 @@ interface ThemeState {
   setTheme: (theme: Theme) => void;
 }
 
-export const useThemeStore = create<ThemeState>((set) => ({
-  theme: "system",
-  setTheme: (theme: Theme) => {
-    localStorage.setItem("vite-ui-theme", theme);
-    set({ theme });
+export const useThemeStore = create<ThemeState>((set) => {
+  const storedTheme =
+    (localStorage.getItem("vite-ui-theme") as Theme) || "system";
 
-    const root = window.document.documentElement;
+  const root = window.document.documentElement;
+
+  const setRootTheme = (theme: Theme) => {
     root.classList.remove("light", "dark");
-
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
@@ -25,5 +24,16 @@ export const useThemeStore = create<ThemeState>((set) => ({
     } else {
       root.classList.add(theme);
     }
-  },
-}));
+  };
+
+  setRootTheme(storedTheme);
+
+  return {
+    theme: storedTheme,
+    setTheme: (theme: Theme) => {
+      localStorage.setItem("vite-ui-theme", theme);
+      set({ theme });
+      setRootTheme(theme);
+    },
+  };
+});

@@ -43,7 +43,7 @@ export const LoanChart: React.FC = () => {
     <ChartContainer config={chartConfig} className="w-full max-h-[500px]">
       <>
         <h3 className="text-center text-xl font-semibold mb-4">
-          Amount by Grade
+          Total Grade Amounts
         </h3>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -58,7 +58,23 @@ export const LoanChart: React.FC = () => {
             />
             <Tooltip
               formatter={(value) => formatAmountForDisplay(Number(value))}
+              contentStyle={{
+                backgroundColor: "rgba(0, 0, 0, 0.75)",
+                borderRadius: "8px",
+                padding: "8px 12px",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                color: "white",
+              }}
+              labelStyle={{
+                fontSize: "14px",
+                fontWeight: "bold",
+              }}
+              itemStyle={{
+                fontSize: "12px",
+                color: "white",
+              }}
             />
+
             <Bar dataKey="amount" fill={chartConfig.amount.color} radius={4} />
           </BarChart>
         </ResponsiveContainer>

@@ -1,18 +1,11 @@
-import React, { Profiler, useEffect } from "react";
+import React, { Profiler } from "react";
 import { useThemeStore } from "@/store/theme-provider";
-import type { Theme } from "@/store/theme-provider";
 import LoanTable from "@/components/loan-table";
 import { ModeToggle } from "./components/mode-toggle";
 import { LoanChart } from "./components/loan-chart";
 
 const App: React.FC = () => {
-  const { theme, setTheme } = useThemeStore();
-
-  useEffect(() => {
-    const storedTheme =
-      (localStorage.getItem("vite-ui-theme") as Theme) || "system";
-    setTheme(storedTheme);
-  }, [setTheme]);
+  const { theme } = useThemeStore();
 
   return (
     <Profiler id="App" onRender={() => {}}>
