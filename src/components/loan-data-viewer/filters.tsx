@@ -27,16 +27,13 @@ import { useLoanStore } from "@/store/loan-store";
 const FiltersComponent: React.FC = () => {
   const {
     filters,
-    homeOwnershipOptions,
-    quarterOptions,
-    termOptions,
-    yearOptions,
+    options: { homeOwnershipOptions, quarterOptions, termOptions, yearOptions },
     setFilter,
     resetFilters,
   } = useLoanStore();
 
   return (
-    <div className="flex items-center space-x-4 justify-center">
+    <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
       <Select
         value={filters.homeOwnership}
         onValueChange={(value) => setFilter("homeOwnership", value)}
@@ -63,7 +60,7 @@ const FiltersComponent: React.FC = () => {
         onValueChange={(value) => setFilter("quarter", value)}
         aria-label="Select quarter"
       >
-        <SelectTrigger className="w-24" aria-label="Quarter selection">
+        <SelectTrigger className="w-32" aria-label="Quarter selection">
           <SelectValue placeholder="Quarter" />
         </SelectTrigger>
         <SelectContent>
@@ -84,7 +81,7 @@ const FiltersComponent: React.FC = () => {
         onValueChange={(value) => setFilter("term", value)}
         aria-label="Select term"
       >
-        <SelectTrigger className="w-24" aria-label="Term selection">
+        <SelectTrigger className="w-32" aria-label="Term selection">
           <SelectValue placeholder="Term" />
         </SelectTrigger>
         <SelectContent>
@@ -105,7 +102,7 @@ const FiltersComponent: React.FC = () => {
         onValueChange={(value) => setFilter("year", value)}
         aria-label="Select year"
       >
-        <SelectTrigger className="w-24" aria-label="Year selection">
+        <SelectTrigger className="w-32" aria-label="Year selection">
           <SelectValue placeholder="Year" />
         </SelectTrigger>
         <SelectContent>
@@ -122,8 +119,8 @@ const FiltersComponent: React.FC = () => {
       </Select>
 
       <Button
-        variant="outline"
-        className="h-10 px-4"
+        variant="destructive"
+        className="h-10 px-4 w-32"
         onClick={resetFilters}
         aria-label="Reset all filters"
       >

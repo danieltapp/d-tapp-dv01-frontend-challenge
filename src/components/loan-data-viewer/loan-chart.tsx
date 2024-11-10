@@ -82,3 +82,4 @@ export const LoanChart: React.FC = () => {
     </ChartContainer>
   );
 };
+export default LoanChart;

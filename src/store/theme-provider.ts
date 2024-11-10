@@ -8,7 +8,7 @@ interface ThemeState {
 }
 
 /**
- * Custom hook to manage and persist the theme state.
+ * Custom hook to manage and persist the theme state. The theme state is persisted in localStorage so that the theme is maintained on page refresh.
  *
  * This hook uses the Zustand library to create a store for managing the theme state.
  * It initializes the theme state from localStorage and provides a method to update the theme.
