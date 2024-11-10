@@ -18,7 +18,7 @@ This project is my solution to the frontend challenge where I built a table and 
 
 ## Introduction 🎯
 
-The goal of this project was to create an app that provides an interactive table where users can view data with various filters. The table is enhanced by a bar graph that visualizes data based on loan grades and their corresponding balances.
+The goal of this project was to create an app that provides an interactive table where users can view data with various filters and a bar graph for visual representation. Given the time constraint of only being able to work on it a few hours per day, I aimed for a balance between visual appeal and practical functionality. While it may not be the "Dan Flashes" of data apps, it’s definitely more than just a plain old shirt. 👕📊
 
 ---
 
@@ -47,6 +47,7 @@ As a results-oriented engineer, I prioritized both **speed** and **functionality
 - **Recharts**: For visualizing the data with a bar graph.
 - **Tailwind CSS**: For a clean and responsive design, ensuring the app looks good on all screen sizes.
 - **ShadCN/UI**: For modern, lightweight UI components.
+- **Playwright**: For end-to-end tests of my app.
 - **Vite**: For fast and optimized build process, including tree shaking to remove unused code.
 
 ---
@@ -114,11 +115,38 @@ This will:
 - **`/store`**: Zustand stores for managing global state.
 - **`/request`**: The `getData` API.
 - **`/utils`**: Helper functions and utilities.
+- **`/tests`**: This is where my Playwright test(s) are. 🧪
+
+---
+
+## Testing with Playwright 🧪
+
+To ensure the app works as expected, I used Playwright for end-to-end testing. Currently there's just a basic render test on my loan data view. This is an area I'd expand upon, adding happy & sad path tests. Here’s how you can run the tests:
+
+
+ **Run the tests**:
+    ```bash
+    pnpm test:e2e
+    ```
+    Or if using npm:
+    ```bash
+    npm run test:e2e
+    ```
 
 ---
 
 ## Concluding Remarks 🎉
 
-This project was a fun challenge and a great opportunity to apply my skills while focusing on performance and optimization. Despite working within the limitations of my time constraint, I delivered a solid MVP. My north stars were performance, accessibility, and clean, readable code.
+This project was a fun challenge and a great opportunity to apply my skills while focusing on performance and optimization. Despite working within the limitations of my time constraint, I delivered a solid MVP. My north stars were performance, accessibility, and clean, readable code. 
+
+While this project is already in a good place, there are always areas for improvement. Here are a few things I’d focus on next:
+
+- **End-to-End Testing**: Currently, I have a basic render test for the loan data view. I’d expand this to include more comprehensive tests, covering both happy and sad paths. Because who doesn’t love a good cry when their code breaks? 😢
+
+- **Performance Optimization**: My Lighthouse scores are pretty stellar with accessibility and best practices both at 100. However, performance is at 97. So, there’s still room to tinker and squeeze out those last few points. Maybe I’ll find that elusive 3% hiding under the couch cushions. 🛋️🔍
 
 
+In conclusion, while this project is already a solid MVP, there’s always room for improvement and iteration. 🚀
+
+
+![Celebration](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTF5bGpicmdoMjl6NjVmNmdpMHU4MW95MWU1b3Fia2lkbnU5aGZ5OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kERV7fZDr6CIMpV4ww/giphy.gif)
