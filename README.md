@@ -26,18 +26,17 @@ The goal of this project was to create an app that provides an interactive table
 - **Dynamic Table**: A table that displays data with total aggregations by grade, and supports **filtering** by home ownership, quarter, term, and year using dropdowns.
 - **Bar Graph**: A bar graph that dynamically updates based on the filters selected in the dropdowns, showing the total balance per grade.
 - **Reset Functionality**: A reset button that clears all filters and returns the table and graph to their original state.
-- **Accessibility**: The app has been designed with accessibility in mind, ensuring that it’s intuitive and usable for all. 🔑
+- **Accessibility**: The app has been designed with accessibility in mind, ensuring that it’s intuitive and usable for all. It includes a theme toggle to switch between light and dark modes, enhancing readability and user comfort. 🔑
 - **Optimized Performance**: The app is built with performance in mind, focusing on smaller, faster loads and minimal code bloat.
 
 ---
 
 ## Performance 💪
 
-As a results-oriented developer, I prioritized both **speed** and **functionality** to ensure the app runs efficiently. Here’s what I did to optimize the performance:
+As a results-oriented engineer, I prioritized both **speed** and **functionality** to ensure the app runs efficiently. Here’s what I did to optimize the performance:
 
 - **Chunking Optimization**: I configured the build tools (Vite + Rollup) to optimize chunking. This ensures that only necessary chunks are loaded, reducing the initial load time and improving the overall speed of the app. For example, I separated `recharts` into its own chunk to keep the core bundle smaller and more efficient. 🔥
-  
-- **Tree-shaking**: I ensured that unused code is removed during the build process. This minimizes the size of the final output and reduces the load time for the app.
+  - **Tree-shaking**: I ensured that unused code is removed during the build process. This minimizes the size of the final output and reduces the load time for the app.
 
 - **Efficient Builds**: By adjusting the build settings and chunking strategies, I reduced the size of the final assets, making the app faster to load and more responsive. With **optimized chunk sizes**, the app is **production-ready** and performs smoothly. 💯
 
@@ -70,13 +69,22 @@ To get this project up and running locally, follow these steps:
     ```
 
 3. **Install dependencies**:
-    ```bash
-    pnpm install
-    ```
+    - If you want to use **pnpm** (recommended):
+        ```bash
+        pnpm install
+        ```
+    - Or if you prefer **npm**:
+        ```bash
+        npm install
+        ```
 
 4. **Start the development server**:
     ```bash
     pnpm dev
+    ```
+    Or if using npm:
+    ```bash
+    npm run dev
     ```
 
 5. **Open the app in your browser**:
@@ -85,7 +93,6 @@ To get this project up and running locally, follow these steps:
 ---
 
 ## Project Structure 📁
-
 
 - **`/components`**: Contains all React components (table, chart, dropdowns, etc.).
 - **`/store`**: Zustand store for managing global state.
@@ -126,3 +133,19 @@ Thanks for checking out my solution! Feel free to dive into the code, explore, a
 
 ---
 
+## Run Setup With Docker (Optional) 🚀
+
+If you'd like to spin up the app in a Docker container, follow these steps:
+
+1. **Make sure you have `direnv` and `docker` installed.**
+2. **Run `direnv allow .` to allow the environment to load.**
+3. **Run the `setup` script to start the Docker container**:
+
+    ```bash
+    setup
+    ```
+
+This will:
+- Build and start the Docker container.
+- Open the app in your default browser at `http://localhost:4173`.
+- Let you see your app running in a production-like environment! 🎉
