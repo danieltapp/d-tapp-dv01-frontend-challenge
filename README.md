@@ -86,7 +86,7 @@ To get this project up and running locally, follow these steps:
     ```
 
 5. **Open the app in your browser**:
-    Visit `http://localhost:5173` to view the app.
+    Visit `http://localhost:5174` to view the app.
 
 ---
 
@@ -104,7 +104,7 @@ If you'd like to spin up the app in a Docker container, follow these steps:
 
 This will:
 - Build and start the Docker container.
-- Opens the app in your default browser at `http://localhost:4173`.
+- Open the app in your default browser at `http://localhost:4173`.
 - Let you see your app running in a production-like environment! 🎉
 
 ---
