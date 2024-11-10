@@ -10,19 +10,19 @@ import {
 } from "recharts";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useLoanStore } from "@/store/loan-store";
+import { formatAmountForDisplay } from "@/lib/helpers";
 
-// Function to format numbers as currency
-const formatAmountForDisplay = (amount: number) => {
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    notation: "compact",
-    maximumFractionDigits: 2,
-  });
-
-  return formatter.format(amount);
-};
-
+/**
+ * LoanChart component renders a bar chart displaying the total amounts for each loan grade.
+ * It uses data from the loan store and formats it for display in the chart.
+ *
+ * @component
+ * @example
+ * // Example usage:
+ * <LoanChart />
+ *
+ * @returns {JSX.Element} The rendered LoanChart component.
+ */
 export const LoanChart: React.FC = () => {
   const { aggregateData } = useLoanStore();
 

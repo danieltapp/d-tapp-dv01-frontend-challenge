@@ -13,6 +13,19 @@ interface AggregatedTableProps {
   aggregateData: Record<string, number>;
 }
 
+/**
+ * AggregatedTable component displays a table with aggregated data.
+ *
+ * @component
+ * @example
+ * const aggregateData = { A: 1000, B: 2000, C: 3000 };
+ * return <AggregatedTable aggregateData={aggregateData} />;
+ *
+ * @param {Object} props - Component props
+ * @param {Record<string, number>} props.aggregateData - An object containing the aggregated data where keys are grades and values are total balances.
+ *
+ * @returns {JSX.Element} A table displaying the total balances by grade.
+ */
 const AggregatedTable: React.FC<AggregatedTableProps> = ({ aggregateData }) => {
   return (
     <div className="border border-gray-300 rounded-lg overflow-hidden">

@@ -3,6 +3,16 @@ import AggregatedTable from "./aggregated-table";
 import Filters from "./filters";
 import { useLoanStore } from "@/store/loan-store";
 
+/**
+ * LoanTable component renders the aggregated loan data and filters.
+ * It uses the `useLoanStore` hook to retrieve the aggregated data.
+ *
+ * @component
+ * @example
+ * return (
+ *   <LoanTable />
+ * )
+ */
 const LoanTable: React.FC = () => {
   const { aggregateData } = useLoanStore();
 

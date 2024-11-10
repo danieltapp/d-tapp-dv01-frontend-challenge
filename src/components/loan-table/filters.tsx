@@ -9,6 +9,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { useLoanStore } from "@/store/loan-store";
 
+/**
+ * FiltersComponent is a React functional component that provides a set of filter options
+ * for loan data. It includes dropdowns for selecting home ownership, quarter, term, and year,
+ * as well as a button to reset all filters.
+ *
+ * The component utilizes the `useLoanStore` hook to access filter options and state management functions.
+ *
+ * @component
+ * @example
+ * return (
+ *   <FiltersComponent />
+ * )
+ *
+ * @returns {JSX.Element} The rendered component with filter options and reset button.
+ */
 const FiltersComponent: React.FC = () => {
   const {
     filters,

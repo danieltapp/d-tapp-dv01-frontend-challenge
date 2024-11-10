@@ -7,6 +7,15 @@ interface ThemeState {
   setTheme: (theme: Theme) => void;
 }
 
+/**
+ * Custom hook to manage and persist the theme state.
+ *
+ * This hook uses the Zustand library to create a store for managing the theme state.
+ * It initializes the theme state from localStorage and provides a method to update the theme.
+ * The theme is applied to the root HTML element by adding the appropriate class.
+ *
+ * @returns {ThemeState} The current theme state and a method to update the theme.
+ */
 export const useThemeStore = create<ThemeState>((set) => {
   const storedTheme =
     (localStorage.getItem("vite-ui-theme") as Theme) || "system";
