@@ -9,6 +9,7 @@ This project is my solution to the frontend challenge where I built a table and 
 - [Performance](#performance)
 - [Technologies Used](#technologies-used)
 - [Getting Started](#getting-started)
+- [Run 'setup' With Docker (Optional)](#run-setup-with-docker-optional)
 - [Project Structure](#project-structure)
 - [Challenge Details](#challenge-details)
 - [Concluding Remarks](#concluding-remarks)
@@ -36,21 +37,17 @@ The goal of this project was to create an app that provides an interactive table
 As a results-oriented engineer, I prioritized both **speed** and **functionality** to ensure the app runs efficiently. Here’s what I did to optimize the performance:
 
 - **Chunking Optimization**: I configured the build tools (Vite + Rollup) to optimize chunking. This ensures that only necessary chunks are loaded, reducing the initial load time and improving the overall speed of the app. For example, I separated `recharts` into its own chunk to keep the core bundle smaller and more efficient. 🔥
-  - **Tree-shaking**: I ensured that unused code is removed during the build process. This minimizes the size of the final output and reduces the load time for the app.
-
 - **Efficient Builds**: By adjusting the build settings and chunking strategies, I reduced the size of the final assets, making the app faster to load and more responsive. With **optimized chunk sizes**, the app is **production-ready** and performs smoothly. 💯
 
 ---
 
 ## Technologies Used 🚀
 
-- **React**: For building the UI components.
 - **Zustand**: For lightweight and efficient state management.
 - **Recharts**: For visualizing the data with a bar graph.
 - **Tailwind CSS**: For a clean and responsive design, ensuring the app looks good on all screen sizes.
 - **ShadCN/UI**: For modern, lightweight UI components.
-- **Vite**: For fast and optimized build process.
-- **TypeScript**: For type safety and better development experience.
+- **Vite**: For fast and optimized build process, including tree shaking to remove unused code.
 
 ---
 
@@ -92,47 +89,6 @@ To get this project up and running locally, follow these steps:
 
 ---
 
-## Project Structure 📁
-
-- **`/components`**: Contains all React components (table, chart, dropdowns, etc.).
-- **`/store`**: Zustand store for managing global state.
-- **`/request`**: The `getData` API and any external data fetching logic.
-- **`/assets`**: Static assets like images and icons.
-- **`/utils`**: Helper functions and utilities.
-
----
-
-## Challenge Details 📝
-
-### Task 1 - Create a Table
-
-Create a table where each column corresponds to a unique grade value from the data. The first row shows the total current balance for each grade.
-
-- You can view the wireframe for the table layout here:  
-  ![Table Wireframe](./wireframe/Table.png)
-
-### Task 2 - Build Dropdown Filters
-
-Add dropdowns for **home ownership**, **quarter**, **term**, and **year** to filter data in the table. The dropdown options should be dynamically generated based on the data available.
-
-### Task 3 - Implement Reset Functionality
-
-Provide a **Reset** button that clears the filters and resets the data.
-
-### Task 4 - Optional Bonus (Bar Graph)
-
-Create a bar graph that visualizes the total balance for each loan grade. This should update dynamically based on the filters selected.
-
----
-
-## Concluding Remarks 🎉
-
-This project was a fun challenge and a great opportunity to apply my skills with React, Zustand, and Vite while focusing on performance and optimization. I used lightweight libraries and optimized build tools to ensure that the app runs smoothly and is production-ready. 
-
-Thanks for checking out my solution! Feel free to dive into the code, explore, and provide feedback. Let’s chat! 💬
-
----
-
 ## Run Setup With Docker (Optional) 🚀
 
 If you'd like to spin up the app in a Docker container, follow these steps:
@@ -147,5 +103,22 @@ If you'd like to spin up the app in a Docker container, follow these steps:
 
 This will:
 - Build and start the Docker container.
-- Open the app in your default browser at `http://localhost:4173`.
+- Opens the app in your default browser at `http://localhost:4173`.
 - Let you see your app running in a production-like environment! 🎉
+
+---
+
+## Project Structure 📁
+
+- **`/components`**: Contains all React components (table, chart, dropdowns, etc.).
+- **`/store`**: Zustand stores for managing global state.
+- **`/request`**: The `getData` API.
+- **`/utils`**: Helper functions and utilities.
+
+---
+
+## Concluding Remarks 🎉
+
+This project was a fun challenge and a great opportunity to apply my skills while focusing on performance and optimization. Despite working within the limitations of my time constraint, I delivered a solid MVP. My north stars were performance, accessibility, and clean, readable code.
+
+
