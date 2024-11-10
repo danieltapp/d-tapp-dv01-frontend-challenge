@@ -40,7 +40,11 @@ export const LoanChart: React.FC = () => {
   } satisfies ChartConfig;
 
   return (
-    <ChartContainer config={chartConfig} className="w-full max-h-[500px]">
+    <ChartContainer
+      data-testid="loan-chart"
+      config={chartConfig}
+      className="w-full max-h-[500px]"
+    >
       <>
         <h3 className="text-center text-xl font-semibold mb-4">
           💰 Total Grade Amounts 💰

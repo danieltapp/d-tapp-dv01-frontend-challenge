@@ -33,7 +33,10 @@ const FiltersComponent: React.FC = () => {
   } = useLoanStore();
 
   return (
-    <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+    <div
+      data-testid="filters"
+      className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 justify-center"
+    >
       <Select
         value={filters.homeOwnership}
         onValueChange={(value) => setFilter("homeOwnership", value)}
@@ -119,6 +122,7 @@ const FiltersComponent: React.FC = () => {
       </Select>
 
       <Button
+        data-testid="reset-filters"
         variant="destructive"
         className="h-10 px-4 w-32"
         onClick={resetFilters}

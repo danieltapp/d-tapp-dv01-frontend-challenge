@@ -28,7 +28,10 @@ interface AggregatedTableProps {
  */
 const AggregatedTable: React.FC<AggregatedTableProps> = ({ aggregateData }) => {
   return (
-    <div className="border border-gray-300 rounded-lg overflow-hidden">
+    <div
+      data-testid="loan-table"
+      className="border border-gray-300 rounded-lg overflow-hidden"
+    >
       <Table className="w-full" aria-labelledby="aggregated-table">
         <caption id="aggregated-table" className="sr-only">
           Aggregated table showing total balances by grade

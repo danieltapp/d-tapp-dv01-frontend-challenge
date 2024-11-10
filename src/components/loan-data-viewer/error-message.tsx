@@ -26,6 +26,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorType }) => {
   const message = getMessage();
   return (
     <div
+      data-testid="error-message"
       className="space-y-6 w-full max-w-full"
       role="alert"
       aria-live="assertive"

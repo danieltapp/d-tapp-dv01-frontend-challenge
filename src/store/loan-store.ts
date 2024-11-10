@@ -64,12 +64,14 @@ export const useLoanStore = create<LoanState>()(
           termOptions: [],
           yearOptions: [],
         },
-        aggregateData: {},
+        aggregateData: {}, // Start as empty but will be populated after fetchData
         error: undefined,
         fetchData: async () => {
           try {
             const csvData = await getLoanData();
             set({ loanData: csvData });
+
+            // Generate options for the filters
             set((state) => ({
               options: {
                 ...state.options,
@@ -82,6 +84,9 @@ export const useLoanStore = create<LoanState>()(
                 yearOptions: createAndSortOptions(csvData, "year"),
               },
             }));
+
+            // Apply filters and calculate aggregate data after fetching loan data
+            get().applyFilters();
           } catch (error) {
             set({ error: "An error occurred." });
             console.error(error);
@@ -91,7 +96,7 @@ export const useLoanStore = create<LoanState>()(
           set((state) => ({
             filters: { ...state.filters, [key]: value },
           }));
-          get().applyFilters();
+          get().applyFilters(); // Apply filters immediately after setting
         },
         resetFilters: () => {
           set({ filters: { ...defaultFilters } });
@@ -108,8 +113,9 @@ export const useLoanStore = create<LoanState>()(
                 value === "all" || item[key as keyof LoanData] === value
             );
           });
-          const aggregated = aggregateDataByGrade(filteredData, filters);
 
+          // Aggregate data by grade and update store
+          const aggregated = aggregateDataByGrade(filteredData, filters);
           setAggregateData(aggregated);
         },
       }),
@@ -117,6 +123,7 @@ export const useLoanStore = create<LoanState>()(
         name: "loan-storage",
         onRehydrateStorage: (state) => {
           if (Object.keys(state.aggregateData).length === 0) {
+            // If there's no aggregateData, trigger fetchData on rehydrate
             state.fetchData();
           }
         },
