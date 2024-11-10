@@ -51,32 +51,21 @@ export const aggregateDataByGrade = (
   filters: Record<string, string>
 ) => {
   const filteredData = loanData.filter((item) => {
-    return (
-      (filters.homeOwnership === "all" ||
-        item.homeOwnership === filters.homeOwnership) &&
-      (filters.quarter === "all" || item.quarter === filters.quarter) &&
-      (filters.term === "all" || item.term === filters.term) &&
-      (filters.year === "all" || item.year === filters.year)
+    return Object.keys(filters).every(
+      (key) =>
+        filters[key] === "all" || item[key as keyof LoanData] === filters[key]
     );
   });
 
-  return filteredData && filteredData.length > 0
-    ? filteredData.reduce((acc, item) => {
-        const grade = item.grade;
-        const balance = parseFloat(item.currentBalance) || 0;
+  return filteredData.reduce((acc, item) => {
+    const grade = item.grade;
+    const balance = parseFloat(item.currentBalance) || 0;
 
-        if (acc[grade]) {
-          acc[grade] += balance;
-        } else {
-          acc[grade] = balance;
-        }
-        return acc;
-      }, {} as Record<string, number>)
-    : loanData.reduce((acc, item) => {
-        const grade = item.grade;
-        if (!acc[grade]) {
-          acc[grade] = 0;
-        }
-        return acc;
-      }, {} as Record<string, number>);
+    if (acc[grade]) {
+      acc[grade] += balance;
+    } else {
+      acc[grade] = balance;
+    }
+    return acc;
+  }, {} as Record<string, number>);
 };

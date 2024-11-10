@@ -64,7 +64,7 @@ export const useLoanStore = create<LoanState>()(
           termOptions: [],
           yearOptions: [],
         },
-        aggregateData: {}, // Start as empty but will be populated after fetchData
+        aggregateData: {},
         error: undefined,
         fetchData: async () => {
           try {
@@ -96,7 +96,7 @@ export const useLoanStore = create<LoanState>()(
           set((state) => ({
             filters: { ...state.filters, [key]: value },
           }));
-          get().applyFilters(); // Apply filters immediately after setting
+          get().applyFilters();
         },
         resetFilters: () => {
           set({ filters: { ...defaultFilters } });
@@ -114,7 +114,6 @@ export const useLoanStore = create<LoanState>()(
             );
           });
 
-          // Aggregate data by grade and update store
           const aggregated = aggregateDataByGrade(filteredData, filters);
           setAggregateData(aggregated);
         },
@@ -123,7 +122,6 @@ export const useLoanStore = create<LoanState>()(
         name: "loan-storage",
         onRehydrateStorage: (state) => {
           if (Object.keys(state.aggregateData).length === 0) {
-            // If there's no aggregateData, trigger fetchData on rehydrate
             state.fetchData();
           }
         },

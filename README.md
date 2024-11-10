@@ -104,7 +104,7 @@ If you'd like to spin up the app in a Docker container, follow these steps:
 
 This will:
 - Build and start the Docker container.
-- Open the app in your default browser at `http://localhost:4173`.
+- Open the app in your default browser at `http://localhost:4174`.
 - Let you see your app running in a production-like environment! 🎉
 
 ---
