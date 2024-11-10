@@ -60,10 +60,12 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command:
-      "echo 'Starting server...' && pnpm run dev && echo 'Server started successfully!'",
+    command: "pnpm run dev",
     url: "http://127.0.0.1:4174",
     reuseExistingServer: true,
     timeout: 120000,
+    env: {
+      DEBUG: "playwright:*", // Enable detailed Playwright logs
+    },
   },
 });
