@@ -36,27 +36,12 @@ export const createAndSortOptions = (
 };
 
 /**
- * Aggregates loan data by grade based on the provided filters.
+ * Aggregates the loan data by grade and calculates the total balance for each grade.
  *
- * @param {LoanData[]} loanData - The array of loan data objects to be aggregated.
- * @param {Record<string, string>} filters - The filters to apply to the loan data.
- * @param {string} filters.homeOwnership - The home ownership filter value. Use "all" to include all home ownership types.
- * @param {string} filters.quarter - The quarter filter value. Use "all" to include all quarters.
- * @param {string} filters.term - The term filter value. Use "all" to include all terms.
- * @param {string} filters.year - The year filter value. Use "all" to include all years.
- * @returns {Record<string, number>} - An object where the keys are loan grades and the values are the aggregated balances for those grades.
+ * @param {LoanData[]} filteredData - The array of filtered loan data objects.
+ * @returns {Record<string, number>} - An object where the keys are grades and the values are the total balances for each grade.
  */
-export const aggregateDataByGrade = (
-  loanData: LoanData[],
-  filters: Record<string, string>
-) => {
-  const filteredData = loanData.filter((item) => {
-    return Object.keys(filters).every(
-      (key) =>
-        filters[key] === "all" || item[key as keyof LoanData] === filters[key]
-    );
-  });
-
+export const aggregateDataByGrade = (filteredData: LoanData[]) => {
   return filteredData.reduce((acc, item) => {
     const grade = item.grade;
     const balance = parseFloat(item.currentBalance) || 0;
@@ -66,6 +51,7 @@ export const aggregateDataByGrade = (
     } else {
       acc[grade] = balance;
     }
+
     return acc;
   }, {} as Record<string, number>);
 };
