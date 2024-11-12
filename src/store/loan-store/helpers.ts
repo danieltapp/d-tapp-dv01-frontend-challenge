@@ -37,6 +37,7 @@ export const createAndSortOptions = (
 
 /**
  * Aggregates the loan data by grade and calculates the total balance for each grade.
+ * Rounds all balances to two decimal places during accumulation.
  *
  * @param {LoanData[]} filteredData - The array of filtered loan data objects.
  * @returns {Record<string, number>} - An object where the keys are grades and the values are the total balances for each grade.
@@ -44,13 +45,12 @@ export const createAndSortOptions = (
 export const aggregateDataByGrade = (filteredData: LoanData[]) => {
   return filteredData.reduce((acc, item) => {
     const grade = item.grade;
-    const balance = parseFloat(item.currentBalance) || 0;
+    const balance = parseFloat(item.currentBalance);
 
-    if (acc[grade]) {
-      acc[grade] += balance;
-    } else {
-      acc[grade] = balance;
-    }
+    if (isNaN(balance)) return acc;
+
+    // Correct the precedence by properly grouping the addition logic
+    acc[grade] = Math.round(((acc[grade] || 0) + balance) * 100) / 100;
 
     return acc;
   }, {} as Record<string, number>);

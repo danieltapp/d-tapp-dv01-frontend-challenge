@@ -28,7 +28,7 @@ export const LoanChart: React.FC = () => {
 
   const chartData = Object.keys(aggregateData).map((key) => ({
     grade: `Grade ${key}`,
-    amount: aggregateData[key], // Raw numeric values for the chart
+    amount: aggregateData[key],
     amountFormatted: formatAmountForDisplay(aggregateData[key]),
   }));
 
