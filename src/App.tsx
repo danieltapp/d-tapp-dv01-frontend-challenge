@@ -1,6 +1,6 @@
 import React from "react";
 import { useThemeStore } from "@/store/theme-provider";
-import ModeToggle from "@/components/loan-data-viewer/mode-toggle";
+import ModeToggle from "@/components/mode-toggle";
 import LoanDataViewer from "@/components/loan-data-viewer";
 
 const App: React.FC = () => {
