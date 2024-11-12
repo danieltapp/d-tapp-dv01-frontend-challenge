@@ -1,36 +1,15 @@
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 import { getLoanData } from "@/request/api";
-import type { LoanData } from "@/request/api";
+import type { LoanState } from "./types";
+import { defaultFilters } from "./types";
 import {
-  createAndSortOptions,
-  aggregateDataByGrade,
-} from "./loan-store-helpers";
-
-const defaultFilters = {
-  homeOwnership: "all",
-  quarter: "all",
-  term: "all",
-  year: "all",
-};
-
-interface LoanState {
-  loanData: LoanData[];
-  filters: typeof defaultFilters;
-  options: {
-    homeOwnershipOptions: string[];
-    quarterOptions: string[];
-    termOptions: string[];
-    yearOptions: string[];
-  };
-  aggregateData: Record<string, number>;
-  error?: string;
-  fetchData: () => Promise<void>;
-  setFilter: (key: keyof LoanState["filters"], value: string) => void;
-  resetFilters: () => void;
-  setAggregateData: (data: Record<string, number>) => void;
-  applyFilters: () => void;
-}
+  setFilter,
+  resetFilters,
+  setAggregateData,
+  applyFilters,
+} from "./reducers";
+import { createAndSortOptions } from "./helpers";
 
 /**
  * Zustand store for managing loan data and filters.
@@ -70,8 +49,6 @@ export const useLoanStore = create<LoanState>()(
           try {
             const csvData = await getLoanData();
             set({ loanData: csvData });
-
-            // Generate options for the filters
             set((state) => ({
               options: {
                 ...state.options,
@@ -84,38 +61,25 @@ export const useLoanStore = create<LoanState>()(
                 yearOptions: createAndSortOptions(csvData, "year"),
               },
             }));
-
-            // Apply filters and calculate aggregate data after fetching loan data
             get().applyFilters();
           } catch (error) {
-            set({ error: "An error occurred." });
+            set({ error: "An error occurred while fetching loan data." });
             console.error(error);
           }
         },
         setFilter: (key, value) => {
-          set((state) => ({
-            filters: { ...state.filters, [key]: value },
-          }));
+          set((state) => setFilter(state, key, value));
           get().applyFilters();
         },
         resetFilters: () => {
-          set({ filters: { ...defaultFilters } });
+          set((state) => resetFilters(state));
           get().applyFilters();
         },
         setAggregateData: (data) => {
-          set({ aggregateData: data });
+          set((state) => setAggregateData(state, data));
         },
         applyFilters: () => {
-          const { loanData, filters, setAggregateData } = get();
-          const filteredData = loanData.filter((item) => {
-            return Object.entries(filters).every(
-              ([key, value]) =>
-                value === "all" || item[key as keyof LoanData] === value
-            );
-          });
-
-          const aggregated = aggregateDataByGrade(filteredData, filters);
-          setAggregateData(aggregated);
+          set((state) => applyFilters(state));
         },
       }),
       {
