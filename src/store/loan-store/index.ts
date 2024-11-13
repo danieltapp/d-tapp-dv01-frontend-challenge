@@ -49,23 +49,26 @@ export const useLoanStore = create<LoanState>()(
           try {
             const csvData = await getLoanData();
             set({ loanData: csvData });
-            set((state) => ({
-              options: {
-                ...state.options,
-                homeOwnershipOptions: createAndSortOptions(
-                  csvData,
-                  "homeOwnership"
-                ),
-                quarterOptions: createAndSortOptions(csvData, "quarter"),
-                termOptions: createAndSortOptions(csvData, "term"),
-                yearOptions: createAndSortOptions(csvData, "year"),
-              },
-            }));
+            get().setDefaultOptions();
             get().applyFilters();
           } catch (error) {
             set({ error: "An error occurred while fetching loan data." });
             console.error(error);
           }
+        },
+        setDefaultOptions: () => {
+          set((state) => ({
+            options: {
+              ...state.options,
+              homeOwnershipOptions: createAndSortOptions(
+                state.loanData,
+                "homeOwnership"
+              ),
+              quarterOptions: createAndSortOptions(state.loanData, "quarter"),
+              termOptions: createAndSortOptions(state.loanData, "term"),
+              yearOptions: createAndSortOptions(state.loanData, "year"),
+            },
+          }));
         },
         setFilter: (key, value) => {
           set((state) => setFilter(state, key, value));
