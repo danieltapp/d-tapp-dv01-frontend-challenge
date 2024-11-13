@@ -48,10 +48,7 @@ export const aggregateDataByGrade = (filteredData: LoanData[]) => {
     const balance = parseFloat(item.currentBalance);
 
     if (isNaN(balance)) return acc;
-
-    // Correct the precedence by properly grouping the addition logic
     acc[grade] = Math.round(((acc[grade] || 0) + balance) * 100) / 100;
-
     return acc;
   }, {} as Record<string, number>);
 };
