@@ -1,0 +1,36 @@
+name: Biome Lint & Format
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run Biome Lint
+        run: pnpm biome lint
+
+      - name: Run Biome Format Check
+        run: pnpm biome format --check
+
+      - name: Show unformatted files
+        if: failure()
+        run: pnpm biome format
