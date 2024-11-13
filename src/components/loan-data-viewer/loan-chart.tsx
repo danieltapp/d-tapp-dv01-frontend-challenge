@@ -43,7 +43,7 @@ export const LoanChart: React.FC = () => {
     <ChartContainer
       data-testid="loan-chart"
       config={chartConfig}
-      className="w-full max-h-[500px]"
+      className="w-full max-h-[350px] pb-2"
     >
       <>
         <h3 className="text-center text-xl font-semibold mb-4">
