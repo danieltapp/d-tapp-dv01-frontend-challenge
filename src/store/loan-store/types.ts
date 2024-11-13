@@ -42,4 +42,5 @@ export interface LoanState {
   resetFilters: () => void;
   setAggregateData: (data: Record<string, number>) => void;
   applyFilters: () => void;
+  setDefaultOptions: () => void;
 }
