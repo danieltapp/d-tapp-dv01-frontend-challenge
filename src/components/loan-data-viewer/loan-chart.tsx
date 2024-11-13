@@ -12,17 +12,6 @@ import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useLoanStore } from "@/store/loan-store";
 import { formatAmountForDisplay } from "@/lib/helpers";
 
-/**
- * LoanChart component renders a bar chart displaying the total amounts for each loan grade.
- * It uses data from the loan store and formats it for display in the chart.
- *
- * @component
- * @example
- * // Example usage:
- * <LoanChart />
- *
- * @returns {JSX.Element} The rendered LoanChart component.
- */
 export const LoanChart: React.FC = () => {
   const { aggregateData } = useLoanStore();
 
@@ -38,6 +27,10 @@ export const LoanChart: React.FC = () => {
       color: "#2563eb",
     },
   } satisfies ChartConfig;
+
+  const minAmount = Math.min(...chartData.map((d) => d.amount));
+  const maxAmount = Math.max(...chartData.map((d) => d.amount));
+  const yAxisBuffer = (maxAmount - minAmount) * 0.2;
 
   return (
     <ChartContainer
@@ -57,7 +50,7 @@ export const LoanChart: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="grade" />
             <YAxis
-              domain={["auto", "auto"]}
+              domain={[minAmount - yAxisBuffer, "auto"]}
               tickFormatter={(value) => formatAmountForDisplay(value)}
             />
             <Tooltip
@@ -78,7 +71,6 @@ export const LoanChart: React.FC = () => {
                 color: "white",
               }}
             />
-
             <Bar dataKey="amount" fill={chartConfig.amount.color} radius={4} />
           </BarChart>
         </ResponsiveContainer>
@@ -86,4 +78,5 @@ export const LoanChart: React.FC = () => {
     </ChartContainer>
   );
 };
+
 export default LoanChart;
