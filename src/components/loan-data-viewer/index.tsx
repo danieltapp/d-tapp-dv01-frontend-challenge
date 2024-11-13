@@ -18,27 +18,17 @@ const LoanDataViewer: React.FC = () => {
   const hasAggregateData = Object.keys(aggregateData).length > 0;
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto p-8 space-y-6">
+    <div className="w-full max-w-screen-xl mx-auto p-8 space-y-8">
       <div className="space-y-6 sm:space-y-8">
         {hasAggregateData ? (
           <>
-            <div className="max-w-screen-lg mx-auto">
-              <LoanChart />
-            </div>
-            <div className="max-w-screen-lg mx-auto">
-              <div className="overflow-x-auto w-full">
-                <AggregatedTable aggregateData={aggregateData} />
-              </div>
-            </div>
+            <LoanChart />
+            <AggregatedTable aggregateData={aggregateData} />
           </>
         ) : (
-          <div className="w-full">
-            <ErrorMessage errorType="no-data" />
-          </div>
+          <ErrorMessage errorType="no-data" />
         )}
-        <div className="max-w-screen-lg mx-auto">
-          <Filters />
-        </div>
+        <Filters />
       </div>
     </div>
   );

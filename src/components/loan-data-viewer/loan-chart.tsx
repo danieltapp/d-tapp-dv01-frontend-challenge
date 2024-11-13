@@ -12,6 +12,18 @@ import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { useLoanStore } from "@/store/loan-store";
 import { formatAmountForDisplay } from "@/lib/helpers";
 
+/**
+ * LoanChart is a React functional component that displays a bar chart of the total loan amounts
+ * by grade. It utilizes the `useLoanStore` hook to access the aggregate loan data.
+ *
+ * @component
+ * @example
+ * return (
+ *   <LoanChart />
+ * )
+ *
+ * @returns {JSX.Element} The rendered component with the loan chart.
+ */
 export const LoanChart: React.FC = () => {
   const { aggregateData } = useLoanStore();
 
